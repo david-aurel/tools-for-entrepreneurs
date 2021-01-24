@@ -25,6 +25,7 @@
     ]
   },
   "dependencies": {
+    "airtable": "^0.8.1",
     "next": "latest",
     "next-google-fonts": "^1.2.1",
     "react": "^16.13.1",
