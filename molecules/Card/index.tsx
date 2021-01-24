@@ -13,7 +13,7 @@ type Props = {
 const Card: React.FC<Props> = ({ name, description, url }) => {
   return (
     <Container>
-      <Text variant="cardTitle" as="h2">
+      <Text variant="cardTitle" as="h3">
         {name}
       </Text>
       <Text variant="cardDescription" as="div">
