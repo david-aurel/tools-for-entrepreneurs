@@ -2,6 +2,7 @@ import React from 'react'
 import { lightTheme, darkTheme } from './theme'
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components'
 import useDarkMode from 'use-dark-mode'
+import { GlobalStyle } from './global'
 
 const ThemeProvider = ({ children }) => {
   const { value } = useDarkMode(false, { storageKey: null, onChange: null })
@@ -14,6 +15,7 @@ const ThemeProvider = ({ children }) => {
 
   const body = (
     <StyledComponentsThemeProvider theme={theme}>
+      <GlobalStyle theme={theme === lightTheme ? 'light' : 'dark'} />
       {children}
     </StyledComponentsThemeProvider>
   )
