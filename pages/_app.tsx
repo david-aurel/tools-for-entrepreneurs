@@ -3,7 +3,7 @@ import { ThemeProvider } from '../lib/styles/ThemeProvider'
 import { GlobalStyle } from '../lib/styles/global'
 import { Head } from '../molecules/Head'
 
-const title = 'Your news'
+const title = 'Tools for entrepreneurs'
 const App = ({ Component, pageProps }) => {
   return (
     <ThemeProvider>
