@@ -5,18 +5,25 @@ import styled, {
 } from 'styled-components'
 import { Theme } from '../../lib/styles/theme'
 
-type Variant = 'primary' | 'secondary'
+type Variant = 'active' | 'inactive'
 
 const variants: Record<Variant, FlattenInterpolation<ThemeProps<Theme>>> = {
-  primary: css`
+  active: css`
     background-color: ${({ theme }) => theme.color.primary};
+    border: 2px solid ${({ theme }) => theme.color.primary};
   `,
-  secondary: css``,
+  inactive: css`
+    border: 2px solid ${({ theme }) => theme.color.primary};
+    color: ${({ theme }) => theme.color.text};
+  `,
 }
 
 export const Button = styled.button<{ variant: Variant }>`
   background: none;
   border: none;
   cursor: pointer;
-  ${({ variant }) => variants[variant]}
+  margin-right: 10px;
+  padding: 10px 15px;
+  border-radius: ${({ theme }) => theme.borderRadius};
+  ${({ variant }) => variants[variant]};
 `
