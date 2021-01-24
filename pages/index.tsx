@@ -22,20 +22,26 @@ type Tool = {
 }
 type Props = {
   data: {
-    tools: Tool[]
-    categories: Category
+    tools?: Tool[]
+    categories?: Category
   }
-  error: Error
+  error?: Error
 }
 export const Home: React.FC<any> = (props: Props) => {
   const { data, error } = props
 
-  const mappedCards = data.tools.map((tool) => {
-    const { Name, Description, URL } = tool
-    return (
-      <Card key={tool.Name} name={Name} description={Description} url={URL} />
-    )
-  })
+  const mappedCards = data?.tools?.length ? (
+    data.tools.map((tool) => {
+      const { Name, Description, URL } = tool
+      return (
+        <Card key={tool.Name} name={Name} description={Description} url={URL} />
+      )
+    })
+  ) : (
+    <div />
+  )
+
+  if (error) return <h1>An error occurred: {JSON.stringify(error)}</h1>
   return (
     <Container>
       <Text variant="header">Tools for entrepreneurs 🔧</Text>
@@ -47,10 +53,17 @@ export const Home: React.FC<any> = (props: Props) => {
 export default Home
 
 export const getStaticProps = async () => {
-  const data = await getAirtableData().catch((err) => {
-    const error = JSON.parse(JSON.stringify(err))
-    return { props: { error } }
-  })
+  let error = null
+  let data = []
+  await getAirtableData()
+    .catch((err) => {
+      error = JSON.parse(JSON.stringify(err))
+    })
+    .then((result) => {
+      if (result) {
+        data = result
+      }
+    })
 
-  return { props: { data } }
+  return { props: { data, error } }
 }
