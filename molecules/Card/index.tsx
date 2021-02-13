@@ -2,6 +2,7 @@ import React from 'react'
 import { Container } from './style'
 import { Text } from '../../atoms/Text'
 import { Link } from '../../atoms/Link'
+import NextLink from 'next/link'
 import Markdown from 'markdown-to-jsx'
 
 type Props = {
@@ -19,9 +20,9 @@ const Card: React.FC<Props> = ({ name, description, url }) => {
       <Text variant="cardDescription" as="div">
         <Markdown>{description}</Markdown>
       </Text>
-      <Link variant="primary" color="primary" href={url}>
-        Go to Website
-      </Link>
+      <NextLink href={`/${name}`}>
+        <Link variant="primary">Checkout {name}</Link>
+      </NextLink>
     </Container>
   )
 }

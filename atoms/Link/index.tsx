@@ -12,7 +12,10 @@ const variants: Record<Variant, FlattenInterpolation<ThemeProps<Theme>>> = {
     background-color: ${({ theme }) => theme.color.primary};
     color: ${({ theme }) => theme.color.mediumContrast};
   `,
-  secondary: css``,
+  secondary: css`
+    color: ${({ theme }) => theme.color.text};
+    text-decoration: underline;
+  `,
 }
 
 type Props = {
@@ -24,5 +27,6 @@ export const Link = styled.a<Props>`
   display: inline-block;
   padding: 10px;
   border-radius: ${({ theme }) => theme.borderRadius};
+  cursor: pointer;
   ${({ variant }) => variants[variant]};
 `
