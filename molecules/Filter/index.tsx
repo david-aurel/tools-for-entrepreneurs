@@ -11,7 +11,7 @@ type Props = {
 }
 const Filter: React.FC<Props> = ({ options, filter, onSubmit }) => {
   const list = options.map((option) => {
-    const variant = filter.includes(option) ? 'active' : 'inactive'
+    const variant = filter.includes(option) ? 'simpleActive' : 'simpleInactive'
     return (
       <Button variant={variant} key={option} onClick={() => onSubmit(option)}>
         {option}
@@ -19,14 +19,7 @@ const Filter: React.FC<Props> = ({ options, filter, onSubmit }) => {
     )
   })
 
-  return (
-    <Container>
-      <Text variant="cardTitle" as="h2">
-        Filter
-      </Text>
-      {list}
-    </Container>
-  )
+  return <Container>{list}</Container>
 }
 
 export { Filter }

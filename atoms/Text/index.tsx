@@ -8,10 +8,13 @@ import { Theme } from '../../lib/styles/theme'
 type Variant = 'header' | 'cardTitle' | 'cardDescription'
 const variants: Record<Variant, FlattenInterpolation<ThemeProps<Theme>>> = {
   header: css`
-    font-size: 2.5rem;
+    font-size: 1.5rem;
+    ${({ theme }) => theme.mq} {
+      font-size: 2rem;
+    }
   `,
   cardTitle: css`
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   `,
   cardDescription: css`
     font-size: 1rem;

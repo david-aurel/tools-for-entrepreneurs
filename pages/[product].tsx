@@ -5,7 +5,11 @@ import { Text } from '../atoms/Text'
 import Markdown from 'markdown-to-jsx'
 import NextLink from 'next/link'
 import { Link } from '../atoms/Link'
+import styled from 'styled-components'
 
+const LinkWrapper = styled.div`
+  margin-top: 30px;
+`
 type Error = {
   error: string
   message: string
@@ -46,10 +50,11 @@ const Product: React.FC<Props> = (props) => {
           <Markdown>{Description}</Markdown>
         </Text>
       </article>
-
-      <Link variant="primary" href={URL}>
-        Go to {Name}'s website
-      </Link>
+      <LinkWrapper>
+        <Link variant="primary" href={URL}>
+          Go to {Name}'s website
+        </Link>
+      </LinkWrapper>
     </>
   )
 }

@@ -23,7 +23,7 @@ const dark: Color = {
 }
 
 const defaultTheme = {
-  mq: '(min-width: 500px)',
+  mq: '@media (min-width: 500px)',
   borderRadius: '5px',
 }
 
