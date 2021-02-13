@@ -35,10 +35,10 @@ const FilterWrapper = styled.div<FilterWrapperProps>`
       mobileActive &&
       css`
         display: inline-block;
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
-        bottom: 0;
+        height: 100%;
         padding: 30px;
         background: ${({ theme }) => theme.color.background};
         :before {
