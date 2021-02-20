@@ -3,7 +3,7 @@
   "author": "@david_aurel",
   "version": "1.0.0",
   "scripts": {
-    "dev": "next dev",
+    "dev": "node getAirtableData.js && next dev",
     "build": "node getAirtableData.js && next build",
     "start": "next start",
     "type-check": "tsc --pretty --noEmit",
