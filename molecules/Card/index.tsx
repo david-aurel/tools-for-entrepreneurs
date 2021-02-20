@@ -11,6 +11,7 @@ type Props = {
 }
 
 const Card: React.FC<Props> = ({ name, description, url }) => {
+  const path = name?.toLowerCase().replace(' ', '-').replace('.', '-')
   return (
     <Container>
       <Text variant="cardTitle" as="h3">
@@ -19,7 +20,7 @@ const Card: React.FC<Props> = ({ name, description, url }) => {
       <Text variant="cardDescription" as="div">
         {description}
       </Text>
-      <NextLink href={`/${name}`}>
+      <NextLink href={`/${path}`}>
         <Link variant="primary">Checkout {name}</Link>
       </NextLink>
     </Container>
