@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import airtableData from '../airtableData.json'
 import { Text } from '../atoms/Text'
 import { Link } from '../atoms/Link'
 import styled from 'styled-components'
 import { Tool } from './index'
+import NextLink from 'next/link'
 
 const LinkWrapper = styled.div`
   margin-top: 30px;
@@ -25,9 +26,9 @@ const Product: React.FC<Props> = (props) => {
   return (
     <>
       <span>←</span>
-      <Link variant="secondary" href="/">
-        Go back
-      </Link>
+      <NextLink href="/">
+        <Link variant="secondary">Go to home</Link>
+      </NextLink>
       <h1>{name}</h1>
       <span>category: {category}</span>
       <article>
