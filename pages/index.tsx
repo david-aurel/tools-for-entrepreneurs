@@ -83,7 +83,7 @@ type Props = {
 }
 export const Home: React.FC<any> = (props: Props) => {
   const { data } = props
-  const [filter, setFilter] = useState('')
+  const [filter, setFilter] = useState('Featured')
   const [hamburgerActive, setHamburgerActive] = useState(false)
 
   const activeCards =
@@ -99,6 +99,8 @@ export const Home: React.FC<any> = (props: Props) => {
 
       return <Card key={name} name={name} description={description} url={url} />
     })
+
+  const featuredCards = []
 
   return (
     <Container>
@@ -121,7 +123,7 @@ export const Home: React.FC<any> = (props: Props) => {
         />
       </FilterWrapper>
 
-      <Content>{activeCards}</Content>
+      <Content>{filter === 'Featured' ? featuredCards : activeCards}</Content>
     </Container>
   )
 }

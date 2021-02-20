@@ -10,8 +10,9 @@ const getAirtableData = async () => {
   const base = new Airtable({ apiKey }).base(baseId)
 
   const tools = {}
-  const categories = []
+  const categories = ['Featured']
   const paths = {}
+  const featured = []
 
   return new Promise((resolve, reject) => {
     base(tableName)
@@ -37,12 +38,14 @@ const getAirtableData = async () => {
               }
 
               // populate categories
-              if (categories.includes(category)) return
-              categories.push(category)
+              if (!categories.includes(category)) categories.push(category)
             })
             // populate paths
-            if (!formattedName) return
-            paths[formattedName] = record.fields
+            if (formattedName) paths[formattedName] = record.fields
+
+            // populate featured
+            // if (record && record.fields && record.fields.Featured)
+            //   featured.push(record.fields)
           }
         })
 
@@ -53,7 +56,7 @@ const getAirtableData = async () => {
         if (error) return reject(error)
       })
       .then(() => {
-        return resolve({ tools, categories, paths })
+        return resolve({ tools, categories, paths, featured })
       })
   })
 }
