@@ -1,9 +1,9 @@
 const fs = require('fs')
-const secrets = require('./secrets.json')
+require('dotenv').config()
 
 const getAirtableData = async () => {
-  const apiKey = process.env.AIRTABLE_API_KEY || secrets.AIRTABLE_API_KEY
-  const baseId = process.env.AIRTABLE_BASE_ID || secrets.AIRTABLE_BASE_ID
+  const apiKey = process.env.AIRTABLE_API_KEY
+  const baseId = process.env.AIRTABLE_BASE_ID
   const tableName = 'Table 1'
 
   const Airtable = require('airtable')
@@ -25,7 +25,7 @@ const getAirtableData = async () => {
           const formattedName =
             name && name.toLowerCase().replace(' ', '-').replace('.', '-')
 
-          const Category = record?.fields?.Category
+          const Category = record && record.fields && record.fields.Category
 
           if (Category) {
             Category.forEach((category) => {
