@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled, { css } from 'styled-components'
-import { getAirtableData } from '../lib/getAirtableData'
+import airtableData from '../airtableData.json'
 import { Card } from '../molecules/Card'
 import { Text } from '../atoms/Text'
 import { Hamburger } from '../atoms/Hamburger'
@@ -61,44 +61,39 @@ const Content = styled.main`
   }
 `
 
-type Error = {
-  error: string
-  message: string
-  statusCode: string
-}
 export type Category = string[]
-type Tool = {
-  Name: string
+export type Tool = {
+  'Product Name': string
+  'Affiliate Program': 'Yes' | 'No'
   Description: string
   URL: string
   Category: Category
 }
 type Props = {
   data: {
-    tools?: Tool[]
+    tools?: Record<string, Tool[]>
     categories?: Category
   }
-  error?: Error
 }
 export const Home: React.FC<any> = (props: Props) => {
-  const { data, error } = props
-  const [filter, setFilter] = useState<string[]>(['featured'])
+  const { data } = props
+  const [filter, setFilter] = useState('')
   const [hamburgerActive, setHamburgerActive] = useState(false)
 
-  const mappedCards =
-    data?.tools?.length &&
-    data.tools.map((tool) => {
-      const { Name, Description, URL, Category } = tool
+  const activeCards =
+    data?.tools[filter]?.length &&
+    data?.tools[filter].map((tool) => {
+      const {
+        ['Affiliate Program']: affiliate,
+        ['Product Name']: name,
+        Category: category,
+        Description: description,
+        URL: url,
+      } = tool
 
-      const isActive = Category.some((item) => filter.includes(item))
-      if (!isActive) return
-
-      return (
-        <Card key={tool.Name} name={Name} description={Description} url={URL} />
-      )
+      return <Card key={name} name={name} description={description} url={url} />
     })
 
-  if (error) return <h1>An error occurred: {JSON.stringify(error)}</h1>
   return (
     <Container>
       <Headline>
@@ -115,12 +110,12 @@ export const Home: React.FC<any> = (props: Props) => {
           options={data.categories}
           filter={filter}
           onSubmit={(option) => {
-            setFilter([option])
+            setFilter(option)
           }}
         />
       </FilterWrapper>
 
-      <Content>{mappedCards}</Content>
+      <Content>{activeCards}</Content>
     </Container>
   )
 }
@@ -128,17 +123,6 @@ export const Home: React.FC<any> = (props: Props) => {
 export default Home
 
 export const getStaticProps = async () => {
-  let error = null
-  let data = []
-  await getAirtableData()
-    .catch((err) => {
-      error = JSON.parse(JSON.stringify(err))
-    })
-    .then((result) => {
-      if (result) {
-        data = result
-      }
-    })
-
-  return { props: { data, error } }
+  const data = airtableData
+  return { props: { data } }
 }

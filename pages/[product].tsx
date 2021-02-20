@@ -1,41 +1,26 @@
-import React from 'react'
-import { useRouter } from 'next/router'
-import { getAirtableData } from '../lib/getAirtableData'
+import React, { useEffect } from 'react'
+import airtableData from '../airtableData.json'
 import { Text } from '../atoms/Text'
-import Markdown from 'markdown-to-jsx'
-import NextLink from 'next/link'
 import { Link } from '../atoms/Link'
 import styled from 'styled-components'
+import { Tool } from './index'
 
 const LinkWrapper = styled.div`
   margin-top: 30px;
 `
-type Error = {
-  error: string
-  message: string
-  statusCode: string
-}
-export type Category = string[]
-type Tool = {
-  Name: string
-  Description: string
-  URL: string
-  Category: Category
-}
+
 type Props = {
-  data: {
-    tools?: Tool[]
-    categories?: Category
-    paths?: string[]
-  }
-  error?: Error
+  data: Tool
 }
 
 const Product: React.FC<Props> = (props) => {
-  const router = useRouter()
-  const { product: url } = router.query
-  const product = props.data.tools.find((tool) => tool.Name === url)
-  const { Name, Category, Description, URL } = product
+  const product = props.data
+  const {
+    ['Product Name']: name,
+    Category: category,
+    Description: description,
+    URL: productUrl,
+  } = product
 
   return (
     <>
@@ -43,54 +28,36 @@ const Product: React.FC<Props> = (props) => {
       <Link variant="secondary" href="/">
         Go back
       </Link>
-      <h1>{Name}</h1>
-      <span>category: {Category}</span>
+      <h1>{name}</h1>
+      <span>category: {category}</span>
       <article>
         <Text variant="cardDescription" as="div">
-          <Markdown>{Description}</Markdown>
+          {description}
         </Text>
       </article>
-      <LinkWrapper>
-        <Link variant="primary" href={URL}>
-          Go to {Name}'s website
-        </Link>
-      </LinkWrapper>
+      {!!productUrl && (
+        <LinkWrapper>
+          <Link variant="primary" href={productUrl}>
+            Go to {name}'s website
+          </Link>
+        </LinkWrapper>
+      )}
     </>
   )
 }
 
 export default Product
 
-export const getStaticProps = async () => {
-  let error = null
-  let data = []
-  await getAirtableData()
-    .catch((err) => {
-      error = JSON.parse(JSON.stringify(err))
-    })
-    .then((result) => {
-      if (result) {
-        data = result
-      }
-    })
+export const getStaticProps = async (context) => {
+  const productName = context.params.product
+  const data = airtableData.paths[productName]
 
-  return { props: { data, error } }
+  return { props: { data } }
 }
 
-export async function getStaticPaths() {
-  let error = null
-  let data: Props['data'] = {}
-
-  await getAirtableData({ onlyPaths: true })
-    .catch((err) => {
-      error = JSON.parse(JSON.stringify(err))
-    })
-    .then((result) => {
-      if (result) {
-        data = result
-      }
-    })
-  const paths = data.paths.map((path) => ({
+export function getStaticPaths() {
+  const pathsArr = Object.keys(airtableData.paths)
+  const paths = pathsArr.map((path) => ({
     params: { product: path },
   }))
   return {

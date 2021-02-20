@@ -6,7 +6,7 @@ import { Container } from './style'
 
 type Props = {
   options: Category
-  filter: Category
+  filter: string
   onSubmit: (option: string) => void
 }
 const Filter: React.FC<Props> = ({ options, filter, onSubmit }) => {
