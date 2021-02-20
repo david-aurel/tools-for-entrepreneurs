@@ -17,7 +17,7 @@ const Card: React.FC<Props> = ({ name, description, url }) => {
       <Text variant="cardTitle" as="h3">
         {name}
       </Text>
-      <Text variant="cardDescription" as="div">
+      <Text variant="cardDescription" as="p">
         {description}
       </Text>
       <NextLink href={`/${path}`}>

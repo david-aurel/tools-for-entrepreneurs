@@ -28,7 +28,7 @@ const FilterWrapper = styled.div<FilterWrapperProps>`
   display: none;
   ${({ theme }) => theme.mq} {
     display: inline-block;
-    grid-column: 1 / 2;
+    grid-column: 1 / 3;
   }
   @media (max-width: 500px) {
     ${({ mobileActive }) =>
@@ -56,8 +56,14 @@ const FilterWrapper = styled.div<FilterWrapperProps>`
 `
 const Content = styled.main`
   grid-column: 1 / -1;
+  margin-top: 30px;
+  display: grid;
+  grid-row-gap: 30px;
+  grid-column-gap: 30px;
+  grid-template-columns: repeat(auto-fill, min(100%));
   ${({ theme }) => theme.mq} {
-    grid-column: 2 / -1;
+    grid-column: 3 / -1;
+    grid-template-columns: repeat(auto-fill, min(350px));
   }
 `
 
